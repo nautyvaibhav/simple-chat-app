@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head> 
+<title>
+    Chat with me 
+</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link href="/styles.css" rel="stylesheet" />
+</head>
+<script src="/socket.io/socket.io.js"></script>
+
+<body>
+<h1>wooooooo i m onnnnnnn </h1> 
+
+
+
+
+<div id='output' style="color:blue ;padding:24px 0px;border-bottom: 2px solid purple; margin: 0 2px; ">
+    </div>
+<div> 
+        <input type="text"  placeholder="type the name" id="name">
+    <input type="text"  placeholder="type the mesaage to send" id="messagebox">
+
+
+<button type="button" class="btn btn-info" id='send'>
+    <span class="glyphicon glyphicon-send "></span> Send
+  </button>
+
+</div>
+
+
+
+
+
+</body>
+
+<script>
+        const socket = io();
+        //query dom 
+        let output=document.getElementById('output');
+        let name=document.getElementById('name');
+        let text=document.getElementById('messagebox');
+        let button=document.getElementById('send');
+        
+
+        //emit events 
+        button.addEventListener('click',()=>{
+            console.log('sending data to server')
+            socket.emit('chat',{name:name.value,
+            text:text.value})
+        });
+
+
+        //listening for events 
+        socket.on('chat',(data)=>{
+            output.innerHTML+='<p><strong>'+data.name+': '+data.text
+        })
+</script>
+
+
+</html>
